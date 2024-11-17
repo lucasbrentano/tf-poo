@@ -104,7 +104,6 @@ public class TransporteController {
                 }
             }
         });
-        cadastrarButton.setOnAction(event -> handleCadastro());
         numeroPassageirosField.setDisable(true);
         cargaPerigosaSim.setDisable(true);
         cargaPerigosaNao.setDisable(true);
@@ -144,6 +143,10 @@ public class TransporteController {
                             latitudeDField, longitudeOField, longitudeDField, numeroPassageirosField);
                     break;
                 case "Carga Inanimada":
+                    if (!cargaPerigosaSim.isSelected() && !cargaPerigosaNao.isSelected()) {
+                        imprimeTextArea.setText("Erro: Selecione se a carga é perigosa ou não.");
+                        return;
+                    }
                     camposObrigatorios = new String[]{
                             codigoField.getText(),
                             nomeField.getText(),
