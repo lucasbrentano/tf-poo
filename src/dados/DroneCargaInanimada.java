@@ -22,4 +22,13 @@ public class DroneCargaInanimada extends DroneCarga {
 	public double calculaCustoKm() {
 		return 0;
 	}
+
+	@Override
+	public String geraTexto() {
+		if (protecao) {
+			return super.geraTexto() + "|Protegido: Sim";
+		} else {
+			return super.geraTexto() + "|Protegido: Nao";
+		}
+	}
 }

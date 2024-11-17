@@ -22,4 +22,13 @@ public class DroneCargaViva extends DroneCarga {
 	public double calculaCustoKm() {
 		return 0;
 	}
+
+	@Override
+	public String geraTexto() {
+		if (climatizado) {
+		return super.geraTexto() + "|Climatizado: Sim";
+		} else {
+			return super.geraTexto() + "|Climatizado: Não";
+		}
+	}
 }

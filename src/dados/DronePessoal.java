@@ -18,4 +18,9 @@ public class DronePessoal extends Drone {
 	public double calculaCustoKm() {
 		return 0;
 	}
+
+	@Override
+	public String geraTexto() {
+		return super.geraTexto() + "|Limite de Passageiros: " + qtdMaxPessoas;
+	}
 }
