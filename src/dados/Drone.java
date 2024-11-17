@@ -39,4 +39,8 @@ public abstract class Drone {
 	public abstract boolean adicionaTransporte(Transporte transporte);
 
 	public abstract double calculaCustoKm();
+
+	public String geraTexto() {
+		return "Código: " + this.codigo + "|Custo Fixo: " + this.custoFixo + "|Autonomia: " + this.autonomia;
+	}
 }
