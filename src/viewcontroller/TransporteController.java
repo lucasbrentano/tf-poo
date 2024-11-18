@@ -260,6 +260,8 @@ public class TransporteController {
                 }
             }
 
+            resetarEstilos();
+
             int numero = Integer.parseInt(codigoField.getText());
             String nome = nomeField.getText();
             String descricao = descricaoField.getText();
@@ -274,21 +276,13 @@ public class TransporteController {
                     int numeroPassageiros = Integer.parseInt(numeroPassageirosField.getText());
                     Transporte transportePessoal = new TransportePessoal(numero, nome, descricao, peso, latitudeOrigem,
                             latitudeDestino, longitudeOrigem, longitudeDestino, numeroPassageiros);
-                    if (app.cadastrarTransporte(transportePessoal)) {
-                        imprimeTextArea.setText("Cadastrado com sucesso!\n" + transportePessoal.geraTexto());
-                    } else {
-                        imprimeTextArea.setText("Erro: Código repetido!");
-                    }
+                    cadastraTransporte(transportePessoal);
                     break;
                 case "Carga Inanimada":
                     boolean cargaPerigosa = cargaPerigosaSim.isSelected();
                     Transporte transporteCargaInanimada = new TransporteCargaInanimada(numero, nome, descricao, peso,
                             latitudeOrigem, latitudeDestino, longitudeOrigem, longitudeDestino, cargaPerigosa);
-                    if (app.cadastrarTransporte(transporteCargaInanimada)) {
-                        imprimeTextArea.setText("Cadastrado com sucesso!\n" + transporteCargaInanimada.geraTexto());
-                    } else {
-                        imprimeTextArea.setText("Erro: Código repetido!");
-                    }
+                    cadastraTransporte(transporteCargaInanimada);
                     break;
                 case "Carga Viva":
                     boolean climatizado = climatizadoSim.isSelected();
@@ -302,14 +296,10 @@ public class TransporteController {
                         return;
                     }
 
-                    Transporte tranporteCargaViva = new TransporteCargaViva(numero, nome, descricao, peso,
+                    Transporte transporteCargaViva = new TransporteCargaViva(numero, nome, descricao, peso,
                             latitudeOrigem, latitudeDestino, longitudeOrigem, longitudeDestino, climatizado,
                             temperaturaMinima, temperaturaMaxima);
-                    if (app.cadastrarTransporte(tranporteCargaViva)) {
-                        imprimeTextArea.setText("Cadastrado com sucesso!\n" + tranporteCargaViva.geraTexto());
-                    } else {
-                        imprimeTextArea.setText("Erro: Código repetido!");
-                    }
+                    cadastraTransporte(transporteCargaViva);
                     break;
                 default:
                     imprimeTextArea.setText("Erro: Selecione um tipo de transporte.");
@@ -317,8 +307,17 @@ public class TransporteController {
             }
         } catch (NumberFormatException e) {
             imprimeTextArea.setText("Erro: Entrada inválida de dados. Verifique os campos numéricos.");
+            destacarCamposInvalidos();
         } catch (Exception e) {
             imprimeTextArea.setText("Erro ao cadastrar transporte: " + e.getMessage());
+        }
+    }
+
+    private void cadastraTransporte(Transporte transporte) {
+        if (app.cadastrarTransporte(transporte)) {
+            imprimeTextArea.setText("Cadastrado com sucesso!\n" + transporte.geraTexto());
+        } else {
+            imprimeTextArea.setText("Erro: Código repetido!");
         }
     }
 
@@ -328,6 +327,66 @@ public class TransporteController {
                 campo.setStyle("-fx-border-color: red");
             } else {
                 campo.setStyle(null);
+            }
+        }
+    }
+
+    private void destacarCamposInvalidos() {
+        try {
+            Integer.parseInt(codigoField.getText());
+        } catch (NumberFormatException e) {
+            codigoField.setStyle("-fx-border-color: red");
+        }
+
+        try {
+            Double.parseDouble(pesoField.getText());
+        } catch (NumberFormatException e) {
+            pesoField.setStyle("-fx-border-color: red");
+        }
+
+        try {
+            Double.parseDouble(latitudeOField.getText());
+        } catch (NumberFormatException e) {
+            latitudeOField.setStyle("-fx-border-color: red");
+        }
+
+        try {
+            Double.parseDouble(latitudeDField.getText());
+        } catch (NumberFormatException e) {
+            latitudeDField.setStyle("-fx-border-color: red");
+        }
+
+        try {
+            Double.parseDouble(longitudeOField.getText());
+        } catch (NumberFormatException e) {
+            longitudeOField.setStyle("-fx-border-color: red");
+        }
+
+        try {
+            Double.parseDouble(longitudeDField.getText());
+        } catch (NumberFormatException e) {
+            longitudeDField.setStyle("-fx-border-color: red");
+        }
+
+        try {
+            if (transporteChoiceBox.getValue() != null && "Pessoal".equals(transporteChoiceBox.getValue())) {
+                Integer.parseInt(numeroPassageirosField.getText());
+            }
+        } catch (NumberFormatException e) {
+            numeroPassageirosField.setStyle("-fx-border-color: red");
+        }
+
+        if (transporteChoiceBox.getValue() != null && "Carga Viva".equals(transporteChoiceBox.getValue()) && climatizadoSim.isSelected()) {
+            try {
+                Double.parseDouble(temperaturaMinimaField.getText());
+            } catch (NumberFormatException e) {
+                temperaturaMinimaField.setStyle("-fx-border-color: red");
+            }
+
+            try {
+                Double.parseDouble(temperaturaMaximaField.getText());
+            } catch (NumberFormatException e) {
+                temperaturaMaximaField.setStyle("-fx-border-color: red");
             }
         }
     }
