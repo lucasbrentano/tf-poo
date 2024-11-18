@@ -2,16 +2,24 @@ package dados;
 
 public class TransporteCargaViva extends Transporte {
 
+	private boolean climatizado;
+
 	private double temperaturaMinima;
 
 	private double temperaturaMaxima;
 
 	public TransporteCargaViva(int numero, String nomeCliente, String descricao, double peso, double latitudeOrigem,
 							   double latitudeDestino, double longitudeOrigem, double longitudeDestino,
-							   double temperaturaMinima, double temperaturaMaxima) {
+							   boolean climatizado, double temperaturaMinima, double temperaturaMaxima) {
 		super(numero, nomeCliente, descricao, peso, latitudeOrigem, latitudeDestino, longitudeOrigem, longitudeDestino);
-		this.temperaturaMinima = temperaturaMinima;
-		this.temperaturaMaxima = temperaturaMaxima;
+		this.climatizado = climatizado;
+		if (climatizado) {
+			this.temperaturaMinima = temperaturaMinima;
+			this.temperaturaMaxima = temperaturaMaxima;
+		} else {
+			this.temperaturaMinima = 0;
+			this.temperaturaMaxima = 0;
+		}
 	}
 
 	@Override
@@ -29,8 +37,19 @@ public class TransporteCargaViva extends Transporte {
 
 	@Override
 	public String geraTexto() {
-		return super.geraTexto() + "|Tipo: Carga Viva|Temperatura mínima: " + temperaturaMinima
-				+ "|Temperatura máxima: " + temperaturaMaxima + "|Custo: " + String.format("%.2f", calculaCusto())
-				+ "|Status: " + this.getSituacao().getNome();
+		double custo = this.calculaCusto();
+		String custoString;
+
+		if (getDrone() == null) {
+			custoString = "|Custo: em orçamento";
+		} else {
+			custoString = "|Custo: " + String.format("%.2f",custo);
+		}
+
+		String climatizadoString = climatizado ? "|Climatizado: SIM|Temperatura Mínima: " + this.temperaturaMinima
+				+ "ºC|Temperatura Máxima: " + this.temperaturaMaxima + "ºC" : "|Climatizado: NÃO";
+
+		return super.geraTexto() + "|Tipo: Carga Viva" + climatizadoString + custoString + "|Status: "
+				+ this.getSituacao().getNome();
 	}
 }

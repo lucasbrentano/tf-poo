@@ -80,7 +80,7 @@ public abstract class Transporte {
 
 	public String geraTexto () {
 		return "Código: " + this.numero + "|Nome: " + this.nomeCliente + "|Descrição: " + this.descricao
-				+ "|Peso: " + this.peso;
+				+ "|Peso: " + String.format("%.2f",this.peso) + " kg";
 	}
 
 	public double calculaDistancia() {

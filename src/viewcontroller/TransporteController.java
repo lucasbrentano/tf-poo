@@ -47,6 +47,9 @@ public class TransporteController {
     private TextField numeroPassageirosField;
 
     @FXML
+    private Label cargaPerigosaLabel;
+
+    @FXML
     private RadioButton cargaPerigosaSim;
 
     @FXML
@@ -59,12 +62,24 @@ public class TransporteController {
     private TextField temperaturaMinimaField;
 
     @FXML
-    private Button cadastrarButton;
+    private Label climatizadoLabel;
+
+    @FXML
+    private RadioButton climatizadoSim;
+
+    @FXML
+    private RadioButton climatizadoNao;
 
     private ACMEAirDrones app;
 
     @FXML
     public void initialize() {
+        cargaPerigosaLabel.setVisible(false);
+        cargaPerigosaSim.setVisible(false);
+        cargaPerigosaNao.setVisible(false);
+        climatizadoLabel.setVisible(false);
+        climatizadoSim.setVisible(false);
+        climatizadoNao.setVisible(false);
         transporteChoiceBox.getItems().addAll(transporte);
         transporteChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -72,8 +87,17 @@ public class TransporteController {
                     case "Pessoal":
                         numeroPassageirosField.setDisable(false);
 
+                        cargaPerigosaLabel.setVisible(false);
+                        cargaPerigosaSim.setVisible(false);
+                        cargaPerigosaNao.setVisible(false);
                         cargaPerigosaSim.setDisable(true);
                         cargaPerigosaNao.setDisable(true);
+
+                        climatizadoLabel.setVisible(false);
+                        climatizadoSim.setVisible(false);
+                        climatizadoNao.setVisible(false);
+                        climatizadoSim.setDisable(true);
+                        climatizadoNao.setDisable(true);
                         temperaturaMaximaField.setDisable(true);
                         temperaturaMinimaField.setDisable(true);
                         break;
@@ -81,32 +105,71 @@ public class TransporteController {
                     case "Carga Inanimada":
                         cargaPerigosaSim.setDisable(false);
                         cargaPerigosaNao.setDisable(false);
+                        cargaPerigosaLabel.setVisible(true);
+                        cargaPerigosaSim.setVisible(true);
+                        cargaPerigosaNao.setVisible(true);
 
+                        climatizadoLabel.setVisible(false);
+                        climatizadoSim.setVisible(false);
+                        climatizadoNao.setVisible(false);
+                        climatizadoSim.setDisable(true);
+                        climatizadoNao.setDisable(true);
                         numeroPassageirosField.setDisable(true);
                         temperaturaMaximaField.setDisable(true);
                         temperaturaMinimaField.setDisable(true);
                         break;
                     case "Carga Viva":
-                        temperaturaMaximaField.setDisable(false);
-                        temperaturaMinimaField.setDisable(false);
+                        climatizadoLabel.setVisible(true);
+                        climatizadoSim.setVisible(true);
+                        climatizadoNao.setVisible(true);
+                        climatizadoSim.setDisable(false);
+                        climatizadoNao.setDisable(false);
+
 
                         numeroPassageirosField.setDisable(true);
+                        cargaPerigosaLabel.setVisible(false);
+                        cargaPerigosaSim.setVisible(false);
+                        cargaPerigosaNao.setVisible(false);
                         cargaPerigosaSim.setDisable(true);
                         cargaPerigosaNao.setDisable(true);
                         break;
                     default:
                         numeroPassageirosField.setDisable(true);
+                        cargaPerigosaLabel.setVisible(false);
                         cargaPerigosaSim.setDisable(true);
                         cargaPerigosaNao.setDisable(true);
+                        climatizadoLabel.setVisible(false);
+                        climatizadoSim.setDisable(true);
+                        climatizadoNao.setDisable(true);
                         temperaturaMaximaField.setDisable(true);
                         temperaturaMinimaField.setDisable(true);
                         break;
                 }
             }
         });
+
+        climatizadoSim.selectedProperty().addListener((obs,wasSelected,isSelected) -> {
+            if (isSelected) {
+                temperaturaMaximaField.setDisable(false);
+                temperaturaMinimaField.setDisable(false);
+            }
+        });
+        climatizadoNao.selectedProperty().addListener((obs,wasSelected,isSelected) -> {
+            if (isSelected) {
+                temperaturaMaximaField.setDisable(true);
+                temperaturaMinimaField.setDisable(true);
+                temperaturaMaximaField.setText("0");
+                temperaturaMinimaField.setText("0");
+            }
+        });
+
         numeroPassageirosField.setDisable(true);
+        cargaPerigosaLabel.setVisible(false);
         cargaPerigosaSim.setDisable(true);
         cargaPerigosaNao.setDisable(true);
+        climatizadoLabel.setVisible(false);
+        climatizadoSim.setDisable(true);
+        climatizadoNao.setDisable(true);
         temperaturaMaximaField.setDisable(true);
         temperaturaMinimaField.setDisable(true);
     }
@@ -161,7 +224,11 @@ public class TransporteController {
                             latitudeDField, longitudeOField, longitudeDField);
                     break;
                 case "Carga Viva":
-                    camposObrigatorios = new String[]{
+                    if (!climatizadoSim.isSelected() && !climatizadoNao.isSelected()) {
+                        imprimeTextArea.setText("Erro: Selecione se a carga precisa ser climatizada");
+                        return;
+                    }
+                    camposObrigatorios = new String [] {
                             codigoField.getText(),
                             nomeField.getText(),
                             descricaoField.getText(),
@@ -170,12 +237,16 @@ public class TransporteController {
                             latitudeDField.getText(),
                             longitudeOField.getText(),
                             longitudeDField.getText(),
-                            temperaturaMaximaField.getText(),
-                            temperaturaMinimaField.getText()
                     };
                     destacarCamposObrigatorios(codigoField, nomeField, descricaoField, pesoField, latitudeOField,
-                            latitudeDField, longitudeOField, longitudeDField, temperaturaMaximaField,
-                            temperaturaMinimaField);
+                            latitudeDField, longitudeOField, longitudeDField);
+                    if (climatizadoSim.isSelected()) {
+                        camposObrigatorios = new String [] {
+                                temperaturaMinimaField.getText(),
+                                temperaturaMaximaField.getText(),
+                        };
+                        destacarCamposObrigatorios(temperaturaMaximaField, temperaturaMinimaField);
+                    }
                     break;
                 default:
                     imprimeTextArea.setText("Erro: Selecione um tipo de transporte.");
@@ -220,11 +291,20 @@ public class TransporteController {
                     }
                     break;
                 case "Carga Viva":
-                    double temperaturaMaxima = Double.parseDouble(temperaturaMaximaField.getText());
-                    double temperaturaMinima = Double.parseDouble(temperaturaMinimaField.getText());
+                    boolean climatizado = climatizadoSim.isSelected();
+                    double temperaturaMinima = climatizado ? Double.parseDouble(temperaturaMinimaField.getText()) : 0;
+                    double temperaturaMaxima = climatizado ? Double.parseDouble(temperaturaMaximaField.getText()) : 0;
+
+                    if (temperaturaMinima > temperaturaMaxima) {
+                        imprimeTextArea.setText("Erro: Temperatura mínima maior que a máxima!");
+                        temperaturaMinimaField.setStyle("-fx-border-color: red;");
+                        temperaturaMaximaField.setStyle("-fx-border-color: red;");
+                        return;
+                    }
+
                     Transporte tranporteCargaViva = new TransporteCargaViva(numero, nome, descricao, peso,
-                            latitudeOrigem, latitudeDestino, longitudeOrigem, longitudeDestino, temperaturaMaxima,
-                            temperaturaMinima);
+                            latitudeOrigem, latitudeDestino, longitudeOrigem, longitudeDestino, climatizado,
+                            temperaturaMinima, temperaturaMaxima);
                     if (app.cadastrarTransporte(tranporteCargaViva)) {
                         imprimeTextArea.setText("Cadastrado com sucesso!\n" + tranporteCargaViva.geraTexto());
                     } else {

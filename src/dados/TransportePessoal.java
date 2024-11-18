@@ -21,7 +21,16 @@ public class TransportePessoal extends Transporte {
 
 	@Override
 	public String geraTexto() {
-		return super.geraTexto() + "|Tipo: Transporte Pessoal|Quantidade de passageiros: " + qtdPessoas + "|Custo: "
-				+ String.format("%.2f",this.calculaCusto()) + "|Status: " + this.getSituacao().getNome();
+		double custo = this.calculaCusto();
+		String custoString;
+
+		if (getDrone() == null) {
+			custoString = "|Custo: em orçamento";
+		} else {
+			custoString = "|Custo: " + String.format("%.2f",custo);
+		}
+
+		return super.geraTexto() + "|Tipo: Transporte Pessoal|Quantidade de passageiros: " + qtdPessoas + custoString
+				+ "|Status: " + this.getSituacao().getNome();
 	}
 }

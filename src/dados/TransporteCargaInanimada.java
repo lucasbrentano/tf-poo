@@ -26,13 +26,18 @@ public class TransporteCargaInanimada extends Transporte {
 
 	@Override
 	public String geraTexto() {
-		if (cargaPerigosa) {
-			return super.geraTexto() + "|Tipo: Carga Inanimada|Carga Perigosa: Sim|Custo: "
-					+ String.format("%.2f", this.calculaCusto()) + "|Status: " + this.getSituacao().getNome();
+		double custo = this.calculaCusto();
+		String custoString;
+
+		if (getDrone() == null) {
+			custoString = "|Custo: em orçamento";
+		} else {
+			custoString = "|Custo: " + String.format("%.2f",custo);
 		}
-		else {
-			return super.geraTexto() + "Tipo: Carga Inanimada|Carga Pergiosa: Não|Custo: "
-					+ String.format("%.2f",this.calculaCusto())	+ "|Status: " + this.getSituacao().getNome();
-		}
+
+		String cargaPerigosaString = cargaPerigosa ? "|Carga Perigosa: SIM" : "|Carga Perigosa: NÃO";
+
+		return super.geraTexto() + "|Tipo: Carga Inanimada" + cargaPerigosaString + custoString + "|Status: "
+				+ this.getSituacao().getNome();
 	}
 }

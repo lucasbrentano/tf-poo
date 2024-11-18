@@ -17,7 +17,8 @@ public class Main extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 640, 480);
         TransporteController controller = fxmlLoader.getController();
         controller.setACMEAirDrones(app);
-        stage.setTitle("ACMEAirDrones");
+        stage.setTitle("ACMEAirDrones - Transportes");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
