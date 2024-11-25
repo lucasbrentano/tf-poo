@@ -22,6 +22,10 @@ public class TransporteCargaViva extends Transporte {
 		}
 	}
 
+	public boolean isClimatizado() {
+		return climatizado;
+	}
+
 	@Override
 	public double calculaCusto() {
 		if (this.getDrone() == null) {

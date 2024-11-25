@@ -76,6 +76,14 @@ public abstract class Transporte {
 		return drone;
 	}
 
+	public void setDrone(Drone drone) {
+		this.drone = drone;
+	}
+
+	public void setSituacao(Estado situacao) {
+		this.situacao = situacao;
+	}
+
 	public abstract double calculaCusto();
 
 	public String geraTexto () {

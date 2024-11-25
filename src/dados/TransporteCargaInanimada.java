@@ -11,6 +11,10 @@ public class TransporteCargaInanimada extends Transporte {
 		this.cargaPerigosa = cargaPerigosa;
 	}
 
+	public boolean isCargaPerigosa() {
+		return cargaPerigosa;
+	}
+
 	@Override
 	public double calculaCusto() {
 		if (this.getDrone() == null) {

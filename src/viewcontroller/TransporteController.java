@@ -5,9 +5,12 @@ import dados.Transporte;
 import dados.TransporteCargaInanimada;
 import dados.TransporteCargaViva;
 import dados.TransportePessoal;
-import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
+
 
 public class TransporteController {
 
@@ -36,7 +39,7 @@ public class TransporteController {
     private TextField longitudeDField;
 
     @FXML
-    private TextArea imprimeTextArea;
+    private TextField imprimeTextField;
 
     @FXML
     private ChoiceBox<String> transporteChoiceBox;
@@ -69,6 +72,51 @@ public class TransporteController {
 
     @FXML
     private RadioButton climatizadoNao;
+
+    @FXML
+    private TableView pessoalTable;
+
+    @FXML
+    private TableView vivoTable;
+
+    @FXML
+    private TableView inanimadoTable;
+
+    @FXML
+    private TableColumn<Transporte, Integer> codigoPessoalColumn;
+    @FXML
+    private TableColumn<Transporte, String> nomePessoalColumn;
+    @FXML
+    private TableColumn<Transporte, Double> pesoPessoalColumn;
+    @FXML
+    private TableColumn<Transporte, String> descricaoPessoalColumn;
+    @FXML
+    private TableColumn<TransportePessoal, Integer> passageirosColumn;
+
+    @FXML
+    private TableColumn<Transporte, Integer> codigoVivoColumn;
+    @FXML
+    private TableColumn<Transporte, String> nomeVivoColumn;
+    @FXML
+    private TableColumn<Transporte, Double> pesoVivoColumn;
+    @FXML
+    private TableColumn<Transporte, String> descricaoVivoColumn;
+    @FXML
+    private TableColumn<TransporteCargaViva, Boolean> climatizadoColumn;
+
+    @FXML
+    private TableColumn<Transporte, Integer> codigoInanimadoColumn;
+    @FXML
+    private TableColumn<Transporte, String> nomeInanimadoColumn;
+    @FXML
+    private TableColumn<Transporte, Double> pesoInanimadoColumn;
+    @FXML
+    private TableColumn<Transporte, String> descricaoInanimadoColumn;
+    @FXML
+    private TableColumn<TransporteCargaInanimada, Boolean> perigosoColumn;
+
+    @FXML
+    private Button sairButton;
 
     private ACMEAirDrones app;
 
@@ -172,6 +220,66 @@ public class TransporteController {
         climatizadoNao.setDisable(true);
         temperaturaMaximaField.setDisable(true);
         temperaturaMinimaField.setDisable(true);
+
+
+        codigoPessoalColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getNumero()).asObject());
+        nomePessoalColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getNomeCliente()));
+        pesoPessoalColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getPeso()).asObject());
+        descricaoPessoalColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDescricao()));
+        passageirosColumn.setCellValueFactory(cellData -> {
+            if (cellData.getValue() instanceof TransportePessoal) {
+                return new javafx.beans.property.SimpleIntegerProperty(((TransportePessoal) cellData.getValue()).getQtdPessoas()).asObject();
+            } else {
+                return null;
+            }
+        });
+
+        codigoVivoColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getNumero()).asObject());
+        nomeVivoColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getNomeCliente()));
+        pesoVivoColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getPeso()).asObject());
+        descricaoVivoColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDescricao()));
+        climatizadoColumn.setCellValueFactory(cellData -> {
+            if (cellData.getValue() instanceof TransporteCargaViva) {
+                return new javafx.beans.property.SimpleBooleanProperty(((TransporteCargaViva) cellData.getValue()).isClimatizado());
+            } else {
+                return null;
+            }
+        });
+        climatizadoColumn.setCellFactory(col -> new TableCell<TransporteCargaViva, Boolean>() {
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item ? "Sim" : "Não");
+                }
+            }
+        });
+
+        codigoInanimadoColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getNumero()).asObject());
+        nomeInanimadoColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getNomeCliente()));
+        pesoInanimadoColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getPeso()).asObject());
+        descricaoInanimadoColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDescricao()));
+        perigosoColumn.setCellValueFactory(cellData -> {
+            if (cellData.getValue() instanceof TransporteCargaInanimada) {
+                return new javafx.beans.property.SimpleBooleanProperty(((TransporteCargaInanimada) cellData.getValue()).isCargaPerigosa());
+            } else {
+                return null;
+            }
+        });
+        perigosoColumn.setCellFactory(col -> new TableCell<TransporteCargaInanimada, Boolean>() {
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item ? "Sim" : "Não");
+                }
+            }
+        });
+
     }
 
     public void setACMEAirDrones(ACMEAirDrones app) {
@@ -182,7 +290,7 @@ public class TransporteController {
     private void handleCadastro() {
         String tipoTransporte = transporteChoiceBox.getValue();
         if (tipoTransporte == null) {
-            imprimeTextArea.setText("Erro: Selecione um tipo de transporte.");
+            imprimeTextField.setText("Erro: Selecione um tipo de transporte.");
             return;
         }
 
@@ -207,7 +315,7 @@ public class TransporteController {
                     break;
                 case "Carga Inanimada":
                     if (!cargaPerigosaSim.isSelected() && !cargaPerigosaNao.isSelected()) {
-                        imprimeTextArea.setText("Erro: Selecione se a carga é perigosa ou não.");
+                        imprimeTextField.setText("Erro: Selecione se a carga é perigosa ou não.");
                         return;
                     }
                     camposObrigatorios = new String[]{
@@ -225,7 +333,7 @@ public class TransporteController {
                     break;
                 case "Carga Viva":
                     if (!climatizadoSim.isSelected() && !climatizadoNao.isSelected()) {
-                        imprimeTextArea.setText("Erro: Selecione se a carga precisa ser climatizada");
+                        imprimeTextField.setText("Erro: Selecione se a carga precisa ser climatizada");
                         return;
                     }
                     camposObrigatorios = new String [] {
@@ -249,13 +357,13 @@ public class TransporteController {
                     }
                     break;
                 default:
-                    imprimeTextArea.setText("Erro: Selecione um tipo de transporte.");
+                    imprimeTextField.setText("Erro: Selecione um tipo de transporte.");
                     return;
             };
 
             for (String campo : camposObrigatorios) {
                 if (campo == null || campo.trim().isEmpty()) {
-                    imprimeTextArea.setText("Erro: Todos os campos obrigatórios devem ser preenchidos.");
+                    imprimeTextField.setText("Erro: Todos os campos obrigatórios devem ser preenchidos.");
                     return;
                 }
             }
@@ -290,7 +398,7 @@ public class TransporteController {
                     double temperaturaMaxima = climatizado ? Double.parseDouble(temperaturaMaximaField.getText()) : 0;
 
                     if (temperaturaMinima > temperaturaMaxima) {
-                        imprimeTextArea.setText("Erro: Temperatura mínima maior que a máxima!");
+                        imprimeTextField.setText("Erro: Temperatura mínima maior que a máxima!");
                         temperaturaMinimaField.setStyle("-fx-border-color: red;");
                         temperaturaMaximaField.setStyle("-fx-border-color: red;");
                         return;
@@ -302,22 +410,22 @@ public class TransporteController {
                     cadastraTransporte(transporteCargaViva);
                     break;
                 default:
-                    imprimeTextArea.setText("Erro: Selecione um tipo de transporte.");
+                    imprimeTextField.setText("Erro: Selecione um tipo de transporte.");
                     return;
             }
         } catch (NumberFormatException e) {
-            imprimeTextArea.setText("Erro: Entrada inválida de dados. Verifique os campos numéricos.");
+            imprimeTextField.setText("Erro: Entrada inválida de dados. Verifique os campos numéricos.");
             destacarCamposInvalidos();
         } catch (Exception e) {
-            imprimeTextArea.setText("Erro ao cadastrar transporte: " + e.getMessage());
+            imprimeTextField.setText("Erro ao cadastrar transporte: " + e.getMessage());
         }
     }
 
     private void cadastraTransporte(Transporte transporte) {
         if (app.cadastrarTransporte(transporte)) {
-            imprimeTextArea.setText("Cadastrado com sucesso!\n" + transporte.geraTexto());
+            imprimeTextField.setText("Transporte cadastrado com sucesso!");
         } else {
-            imprimeTextArea.setText("Erro: Código repetido!");
+            imprimeTextField.setText("Erro: Código repetido!");
         }
     }
 
@@ -393,19 +501,83 @@ public class TransporteController {
 
     @FXML
     private void handleCarregar() {
-        imprimeTextArea.clear();
+        imprimeTextField.clear();
+
         if (app == null || app.getTransportes().isEmpty()) {
-            imprimeTextArea.setText("Nenhum transporte cadastrado!");
+            imprimeTextField.setText("Nenhum transporte cadastrado!");
             return;
         }
 
-        StringBuilder lista = new StringBuilder();
-        for (Transporte transporte : app.getTransportes()) {
-            lista.append(transporte.geraTexto()).append("\n");
+        String tipoSelecionado = transporteChoiceBox.getValue();
+        if (tipoSelecionado == null) {
+            imprimeTextField.setText("Erro: Selecione um tipo de transporte.");
+            return;
         }
 
-        imprimeTextArea.setText(lista.toString());
+        ObservableList<Transporte> transporteList;
+
+        switch (tipoSelecionado) {
+            case "Pessoal":
+                // Filtrar apenas transportes do tipo TransportePessoal
+                transporteList = FXCollections.observableArrayList();
+                for (Transporte transporte : app.getTransportes()) {
+                    if (transporte instanceof TransportePessoal) {
+                        transporteList.add(transporte);
+                    }
+                }
+
+                // Mostrar a tabela de passageiros e esconder as outras
+                pessoalTable.setVisible(true);
+                vivoTable.setVisible(false);
+                inanimadoTable.setVisible(false);
+
+                // Preencher a tabela com os dados filtrados
+                pessoalTable.setItems(transporteList);
+                break;
+
+            case "Carga Viva":
+                // Filtrar apenas transportes do tipo TransporteCargaViva
+                ObservableList<TransporteCargaViva> transporteCargaVivaList = FXCollections.observableArrayList();
+                for (Transporte transporte : app.getTransportes()) {
+                    if (transporte instanceof TransporteCargaViva) {
+                        transporteCargaVivaList.add((TransporteCargaViva) transporte);
+                    }
+                }
+
+                // Mostrar a tabela de carga viva e esconder as outras
+                vivoTable.setVisible(true);
+                pessoalTable.setVisible(false);
+                inanimadoTable.setVisible(false);
+
+                // Preencher a tabela com os dados filtrados
+                vivoTable.setItems(transporteCargaVivaList);
+                break;
+
+            case "Carga Inanimada":
+                // Filtrar apenas transportes do tipo TransporteCargaInanimada
+                ObservableList<TransporteCargaInanimada> transporteCargaInanimadaList = FXCollections.observableArrayList();
+                for (Transporte transporte : app.getTransportes()) {
+                    if (transporte instanceof TransporteCargaInanimada) {
+                        transporteCargaInanimadaList.add((TransporteCargaInanimada) transporte);
+                    }
+                }
+
+                // Mostrar a tabela de carga inanimada e esconder as outras
+                inanimadoTable.setVisible(true);
+                pessoalTable.setVisible(false);
+                vivoTable.setVisible(false);
+
+                // Preencher a tabela com os dados filtrados
+                inanimadoTable.setItems(transporteCargaInanimadaList);
+                break;
+
+            default:
+                imprimeTextField.setText("Erro: Selecione um tipo de transporte válido.");
+                return;
+        }
     }
+
+
 
     @FXML
     private void handleLimpar() {
@@ -420,7 +592,7 @@ public class TransporteController {
         numeroPassageirosField.clear();
         temperaturaMaximaField.clear();
         temperaturaMinimaField.clear();
-        imprimeTextArea.clear();
+        imprimeTextField.clear();
         cargaPerigosaSim.setSelected(false);
         cargaPerigosaNao.setSelected(false);
         resetarEstilos();
@@ -442,6 +614,7 @@ public class TransporteController {
 
     @FXML
     private void handleSair() {
-        Platform.exit();
+        Stage stage = (Stage) sairButton.getScene().getWindow();
+        stage.close();
     }
 }

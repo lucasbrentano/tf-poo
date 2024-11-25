@@ -10,6 +10,10 @@ public class TransportePessoal extends Transporte {
 		this.qtdPessoas = qtdPessoas;
 	}
 
+	public int getQtdPessoas() {
+		return qtdPessoas;
+	}
+
 	@Override
 	public double calculaCusto() {
 		if (this.getDrone() == null) {
