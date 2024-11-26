@@ -42,21 +42,21 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label layoutX="176.0" layoutY="43.0" text="ACME Air Drones">
+            <Label layoutX="176.0" layoutY="14.0" text="ACME Air Drones">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
-            <VBox alignment="TOP_CENTER" layoutX="76.0" layoutY="125.0" prefHeight="300.0" prefWidth="200.0" spacing="15.0">
+            <VBox alignment="TOP_CENTER" layoutX="76.0" layoutY="90.0" prefHeight="300.0" prefWidth="200.0" spacing="15.0">
                <children>
                   <Button fx:id="botaoCadastraDrone" mnemonicParsing="false" onAction="#handleCadastrarDrone" prefHeight="50.0" prefWidth="165.0" text="Cadastar Drone" />
                   <Button fx:id="botaoCadastraTransporte" mnemonicParsing="false" onAction="#handleCadastrarTransporte" prefHeight="50.0" prefWidth="165.0" text="Cadastra Transporte" />
                   <Button fx:id="botaoProcessarTransporte" mnemonicParsing="false" onAction="#handleProcessarTransporte" prefHeight="50.0" prefWidth="165.0" text="Processar Transporte" />
-                  <Button fx:id="botaoRelatorioGeral" mnemonicParsing="false" prefHeight="50.0" prefWidth="165.0" text="Relatório Geral" />
+                  <Button fx:id="botaoRelatorioGeral" mnemonicParsing="false" onAction="#handleRelatorioGeral" prefHeight="50.0" prefWidth="165.0" text="Relatório Geral" />
                   <Button fx:id="botaoRelatorioTransporte" mnemonicParsing="false" prefHeight="50.0" prefWidth="165.0" text="Relatório Transportes" />
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" layoutX="364.0" layoutY="125.0" prefHeight="300.0" prefWidth="200.0" spacing="15.0">
+            <VBox alignment="TOP_CENTER" layoutX="364.0" layoutY="90.0" prefHeight="300.0" prefWidth="200.0" spacing="15.0">
                <children>
                   <Button fx:id="botaoAtualizaTransporte" mnemonicParsing="false" prefHeight="50.0" prefWidth="165.0" text="Atualiza Transporte" />
                   <Button fx:id="botaoRealizaSimulacao" mnemonicParsing="false" prefHeight="50.0" prefWidth="165.0" text="Realiza Simulação" />

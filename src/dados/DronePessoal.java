@@ -9,6 +9,10 @@ public class DronePessoal extends Drone {
 		this.qtdMaxPessoas = qtdMaxPessoas;
 	}
 
+	public int getQtdMaxPessoas() {
+		return qtdMaxPessoas;
+	}
+
 	@Override
 	public boolean adicionaTransporte(Transporte transporte) {
 		return false;
@@ -16,7 +20,11 @@ public class DronePessoal extends Drone {
 
 	@Override
 	public double calculaCustoKm() {
-		return 0;
+		double custo = 0;
+
+		custo = getCustoFixo() + (qtdMaxPessoas * 2);
+
+		return custo;
 	}
 
 	@Override

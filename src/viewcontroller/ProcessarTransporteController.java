@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 import java.util.Optional;
+import java.util.Queue;
 
 public class ProcessarTransporteController {
     @FXML
@@ -54,31 +55,38 @@ public class ProcessarTransporteController {
     @FXML
     private void handleProcessar() {
         if (app != null && !app.getFilaTransporte().isEmpty()) {
-            Transporte transporte = app.getFilaTransporte().peek();
-            Optional<Drone> droneDisponivel = app.getFrota().stream()
-                    .filter(drone -> isDroneCompativelComTransporte(drone, transporte))
-                    .findFirst();
+            Queue<Transporte> filaTransporte = app.getFilaTransporte();
+            boolean algumTransporteProcessado = false;
 
-            if (droneDisponivel.isPresent()) {
-                Drone drone = droneDisponivel.get();
-                app.getFilaTransporte().poll();
-                assert transporte != null;
-                transporte.setDrone(drone);
-                transporte.setSituacao(Estado.ALOCADO);
-                carregarTransportesNaFila();
+            for (Transporte transporte : filaTransporte) {
+                Optional<Drone> droneDisponivel = app.getFrota().stream()
+                        .filter(drone -> isDroneCompativelComTransporte(drone, transporte))
+                        .findFirst();
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Transporte Processado");
-                alert.setHeaderText(null);
-                alert.setContentText("Transporte " + transporte.getNumero() + " foi designado ao drone " + drone.getCodigo() + ".");
-                alert.showAndWait();
-            } else {
+                if (droneDisponivel.isPresent()) {
+                    Drone drone = droneDisponivel.get();
+                    filaTransporte.remove(transporte);
+                    transporte.setDrone(drone);
+                    transporte.setSituacao(Estado.ALOCADO);
+                    algumTransporteProcessado = true;
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Transporte Processado");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Transporte " + transporte.getNumero() + " foi designado ao drone " + drone.getCodigo() + ".");
+                    alert.showAndWait();
+                }
+            }
+
+            if (!algumTransporteProcessado) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Nenhum Drone Disponível");
                 alert.setHeaderText(null);
                 alert.setContentText("Nenhum drone disponível para realizar o transporte no momento.");
                 alert.showAndWait();
             }
+
+            carregarTransportesNaFila();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Fila Vazia");
@@ -89,17 +97,17 @@ public class ProcessarTransporteController {
     }
 
     private boolean isDroneCompativelComTransporte(Drone drone, Transporte transporte) {
-
         if (drone instanceof DronePessoal && transporte instanceof TransportePessoal) {
-            return true;
+            return ((TransportePessoal) transporte).getQtdPessoas() <= ((DronePessoal) drone).getQtdMaxPessoas();
         } else if (drone instanceof DroneCargaInanimada && transporte instanceof TransporteCargaInanimada) {
-            return true;
+            return transporte.getPeso() <= ((DroneCargaInanimada) drone).getPesoMaximo() && ((TransporteCargaInanimada) transporte).isCargaPerigosa() == ((DroneCargaInanimada) drone).isProtecao();
         } else if (drone instanceof DroneCargaViva && transporte instanceof TransporteCargaViva) {
-            return true;
+            return transporte.getPeso() <= ((DroneCargaViva) drone).getPesoMaximo() && ((TransporteCargaViva) transporte).isClimatizado() == ((DroneCargaViva) drone).isClimatizado();
         } else {
             return false;
         }
     }
+
 
     public void setACMEAirDrones(ACMEAirDrones app) {
         this.app = app;

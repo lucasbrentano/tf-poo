@@ -24,16 +24,18 @@
       <Label fx:id="autonomiaLabel" layoutX="37.0" layoutY="136.0" text="Autonomia" />
       <TextField fx:id="pesoMaximoTField" layoutX="130.0" layoutY="169.0" promptText="Peso máximo em kg" />
       <Label fx:id="pesoMaximoLabel" layoutX="39.0" layoutY="173.0" text="Peso Maximo" />
-      <Label layoutX="350.0" layoutY="173.0" text="Passageiros" />
-      <TextField fx:id="passageirosTField" layoutX="430.0" layoutY="170.0" promptText="Limite de passageiros" />
+      <Label layoutX="350.0" layoutY="68.0" text="Tipo" />
+      <ChoiceBox fx:id="tipoDroneChoiceBox" layoutX="387.0" layoutY="64.0" prefWidth="150.0" />
       <CheckBox fx:id="protecaoCB" layoutX="350.0" layoutY="101.0" mnemonicParsing="false" text="Proteção" />
       <CheckBox fx:id="climatizadoCB" layoutX="350.0" layoutY="136.0" mnemonicParsing="false" text="Climatizado" />
+      <Label layoutX="350.0" layoutY="173.0" text="Passageiros" />
+      <TextField fx:id="passageirosTField" layoutX="430.0" layoutY="170.0" promptText="Limite de passageiros" />
       <Button fx:id="cadastrarButton" layoutX="40.0" layoutY="432.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Cadastrar" />
       <Button fx:id="limparButton" layoutX="193.0" layoutY="432.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Limpar" />
       <Button fx:id="carregarButton" layoutX="345.0" layoutY="432.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Carregar" />
       <Button fx:id="sairButton" layoutX="497.0" layoutY="432.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Sair" />
       <TextField fx:id="imprimeTField" editable="false" layoutX="35.0" layoutY="205.0" prefHeight="26.0" prefWidth="565.0" />
-      <TableView fx:id="pessoalTableView" layoutX="34.0" layoutY="242.0" prefHeight="180.0" prefWidth="565.0">
+      <TableView fx:id="pessoalTableView" layoutX="34.0" layoutY="242.0" prefHeight="180.0" prefWidth="565.0" visible="false">
         <columns>
           <TableColumn fx:id="codigoPessoalColumn" prefWidth="75.0" text="Codigo" />
           <TableColumn fx:id="custoPessoalColumn" prefWidth="75.0" text="Custo" />
@@ -44,15 +46,25 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ChoiceBox fx:id="tipoDroneChoiceBox" layoutX="387.0" layoutY="64.0" prefWidth="150.0" />
-      <Label layoutX="350.0" layoutY="68.0" text="Tipo" />
-      <TableView fx:id="inanimadaTableView" layoutX="34.0" layoutY="242.0" prefHeight="180.0" prefWidth="565.0">
+      <TableView fx:id="inanimadaTableView" layoutX="34.0" layoutY="242.0" prefHeight="180.0" prefWidth="565.0" visible="false">
          <columns>
             <TableColumn fx:id="codigoInanimadoColumn" prefWidth="75.0" text="Codigo" />
             <TableColumn fx:id="custoInanimadoColumn" prefWidth="75.0" text="Custo" />
             <TableColumn fx:id="autonomiaInanimadoColumn" prefWidth="75.0" text="Autonomia" />
             <TableColumn fx:id="pesoInanimadoColumn" prefWidth="75.0" text="Peso Máximo" />
             <TableColumn fx:id="protecaoColumn" prefWidth="75.0" text="Proteção" />
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <TableView fx:id="vivaTableView" layoutX="34.0" layoutY="242.0" prefHeight="180.0" prefWidth="565.0" visible="false">
+         <columns>
+            <TableColumn fx:id="codigoVivaColumn" prefWidth="75.0" text="Codigo" />
+            <TableColumn fx:id="custoVivaColumn" prefWidth="75.0" text="Custo" />
+            <TableColumn fx:id="autonomiaVivaColumn" prefWidth="75.0" text="Autonomia" />
+            <TableColumn fx:id="pesoVivaColumn" prefWidth="75.0" text="Peso Máximo" />
+            <TableColumn fx:id="climatizadoColumn" prefWidth="75.0" text="Climatizado" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

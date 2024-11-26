@@ -1,11 +1,9 @@
 package viewcontroller;
 
 import aplicacao.ACMEAirDrones;
-import dados.Drone;
-import dados.DroneCargaInanimada;
-import dados.DroneCargaViva;
-import dados.DronePessoal;
-import javafx.application.Platform;
+import dados.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -31,12 +29,85 @@ public class DroneController {
     private ChoiceBox<String> tipoDroneChoiceBox;
 
     @FXML
-    private ToggleGroup grupoDroneCarga = new ToggleGroup();
+    private TableView<DronePessoal> pessoalTableView;
+    @FXML
+    private TableColumn<DronePessoal, Integer> codigoPessoalColumn;
+    @FXML
+    private TableColumn<DronePessoal, Double> custoPessoalColumn;
+    @FXML
+    private TableColumn<DronePessoal, Double> autonomiaPessoalColumn;
+    @FXML
+    private TableColumn<DronePessoal, Integer> passageirosColumn;
+
+    @FXML
+    private TableView<DroneCargaInanimada> inanimadaTableView;
+    @FXML
+    private TableColumn<DroneCargaInanimada, Integer> codigoInanimadoColumn;
+    @FXML
+    private TableColumn<DroneCargaInanimada, Double> custoInanimadoColumn;
+    @FXML
+    private TableColumn<DroneCargaInanimada, Double> autonomiaInanimadoColumn;
+    @FXML
+    private TableColumn<DroneCargaInanimada, Double> pesoInanimadoColumn;
+    @FXML
+    private TableColumn<DroneCargaInanimada, Boolean> protecaoColumn;
+
+    @FXML
+    private TableView<DroneCargaViva> vivaTableView;
+    @FXML
+    private TableColumn<DroneCargaViva, Integer> codigoVivaColumn;
+    @FXML
+    private TableColumn<DroneCargaViva, Double> custoVivaColumn;
+    @FXML
+    private TableColumn<DroneCargaViva, Double> autonomiaVivaColumn;
+    @FXML
+    private TableColumn<DroneCargaViva, Double> pesoVivaColumn;
+    @FXML
+    private TableColumn<DroneCargaViva, Boolean> climatizadoColumn;
 
     private ACMEAirDrones app;
 
     @FXML
     public void initialize() {
+        codigoPessoalColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getCodigo()).asObject());
+        custoPessoalColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getCustoFixo()).asObject());
+        autonomiaPessoalColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getAutonomia()).asObject());
+        passageirosColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getQtdMaxPessoas()).asObject());
+
+        codigoInanimadoColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getCodigo()).asObject());
+        custoInanimadoColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getCustoFixo()).asObject());
+        autonomiaInanimadoColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getAutonomia()).asObject());
+        pesoInanimadoColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getPesoMaximo()).asObject());
+        protecaoColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleBooleanProperty(cellData.getValue().isProtecao()).asObject());
+        protecaoColumn.setCellFactory(col -> new TableCell<DroneCargaInanimada, Boolean>() {
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item ? "Sim" : "Não");
+                }
+            }
+        });
+
+        codigoVivaColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getCodigo()).asObject());
+        custoVivaColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getCustoFixo()).asObject());
+        autonomiaVivaColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getAutonomia()).asObject());
+        pesoVivaColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getPesoMaximo()).asObject());
+        climatizadoColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleBooleanProperty(cellData.getValue().isClimatizado()).asObject());
+        climatizadoColumn.setCellFactory(col -> new TableCell<DroneCargaViva, Boolean>() {
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item ? "Sim" : "Não");
+                }
+            }
+        });
+
         climatizadoCB.setDisable(true);
         protecaoCB.setDisable(true);
         pesoMaximoTField.setDisable(true);
@@ -107,14 +178,6 @@ public class DroneController {
         tipoDroneChoiceBox.getSelectionModel().clearSelection();
     }
 
-    public void mostrar() {
-        imprimeTField.clear();
-        if (app == null || app.getFrota().isEmpty()) {
-            imprimeTField.setText("Nenhum drone cadastrado!");
-            return;
-        }
-    }
-
     @FXML
     public void cadastrar() {
         try {
@@ -167,6 +230,77 @@ public class DroneController {
             imprimeTField.setText("Preencha todos os dados!");
         }
     }
+
+    @FXML
+    private void mostrar() {
+        imprimeTField.clear();
+
+        if (app == null || app.getFrota().isEmpty()) {
+            imprimeTField.setText("Nenhum drone cadastrado!");
+            return;
+        }
+
+        String tipoSelecionado = tipoDroneChoiceBox.getValue();
+        if (tipoSelecionado == null) {
+            imprimeTField.setText("Erro: Selecione um tipo de drone.");
+            return;
+        }
+
+        ObservableList<Drone> droneList;
+
+        switch (tipoSelecionado) {
+            case "Pessoal":
+                droneList = FXCollections.observableArrayList();
+                for (Drone drone : app.getFrota()) {
+                    if (drone instanceof DronePessoal) {
+                        droneList.add(drone);
+                    }
+                }
+
+                pessoalTableView.setVisible(true);
+                inanimadaTableView.setVisible(false);
+                vivaTableView.setVisible(false);
+
+                pessoalTableView.setItems(FXCollections.observableArrayList(droneList.stream().filter(d -> d instanceof DronePessoal).map(d -> (DronePessoal) d).toList()));
+                break;
+
+            case "Carga Inanimada":
+                ObservableList<DroneCargaInanimada> droneCargaInanimadaList = FXCollections.observableArrayList();
+                for (Drone drone : app.getFrota()) {
+                    if (drone instanceof DroneCargaInanimada) {
+                        droneCargaInanimadaList.add((DroneCargaInanimada) drone);
+                    }
+                }
+
+                inanimadaTableView.setVisible(true);
+                pessoalTableView.setVisible(false);
+                vivaTableView.setVisible(false);
+
+                inanimadaTableView.setItems(droneCargaInanimadaList);
+                break;
+
+            case "Carga Viva":
+                ObservableList<DroneCargaViva> droneCargaVivaList = FXCollections.observableArrayList();
+                for (Drone drone : app.getFrota()) {
+                    if (drone instanceof DroneCargaViva) {
+                        droneCargaVivaList.add((DroneCargaViva) drone);
+                    }
+                }
+
+                vivaTableView.setVisible(true);
+                pessoalTableView.setVisible(false);
+                inanimadaTableView.setVisible(false);
+
+                vivaTableView.setItems(droneCargaVivaList);
+                break;
+
+            default:
+                imprimeTField.setText("Erro: Selecione um tipo de drone válido.");
+                return;
+        }
+    }
+
+
 
     private void sair() {
         Stage stage = (Stage) sairButton.getScene().getWindow();
