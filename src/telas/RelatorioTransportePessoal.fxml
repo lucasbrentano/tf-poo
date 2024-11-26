@@ -17,14 +17,14 @@
                   <Font size="36.0" />
                </font>
             </Label>
-            <Button layoutX="1006.0" layoutY="680.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="60.0" text="Sair" />
+            <Button fx:id="sairButton" layoutX="1006.0" layoutY="680.0" mnemonicParsing="false" onAction="#handleSair" prefHeight="26.0" prefWidth="60.0" text="Sair" />
             <TableView fx:id="tabelaTransportePessoal" layoutX="14.0" layoutY="66.0" prefHeight="600.0" prefWidth="1045.0">
               <columns>
                 <TableColumn fx:id="codigoTColumn" prefWidth="75.0" text="Codigo" />
                 <TableColumn fx:id="nomeTColumn" prefWidth="75.0" text="Nome" />
                   <TableColumn fx:id="descricaoTColumn" prefWidth="75.0" text="Descriçao" />
-                  <TableColumn fx:id="pesoTColumn" prefWidth="75.0" text="Peso" />
-                  <TableColumn fx:id="distanciaTColumn" prefWidth="75.0" text="Distancia" />
+                  <TableColumn fx:id="pesoTColumn" prefWidth="75.0" text="Peso (kg)" />
+                  <TableColumn fx:id="distanciaTColumn" prefWidth="75.0" text="Distancia (km)" />
                   <TableColumn fx:id="passageirosTColumn" prefWidth="75.0" text="Passageiros" />
                   <TableColumn fx:id="situacaoTColumn" prefWidth="75.0" text="Situaçao" />
                   <TableColumn fx:id="custoTColumn" prefWidth="75.0" text="Custo" />

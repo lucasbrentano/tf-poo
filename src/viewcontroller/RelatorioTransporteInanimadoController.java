@@ -1,45 +1,45 @@
 package viewcontroller;
 
+import aplicacao.ACMEAirDrones;
+import dados.Estado;
+import dados.TransporteCargaInanimada;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import dados.TransportePessoal;
-import aplicacao.ACMEAirDrones;
-import dados.Estado;
 import javafx.stage.Stage;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RelatorioTransportePessoalController {
+public class RelatorioTransporteInanimadoController {
 
     @FXML
-    private TableView<TransportePessoal> tabelaTransportePessoal;
+    private TableView<TransporteCargaInanimada> tabelaTransporteInanimado;
 
     @FXML
-    private TableColumn<TransportePessoal, Integer> codigoTColumn;
+    private TableColumn<TransporteCargaInanimada, Integer> codigoTColumn;
 
     @FXML
-    private TableColumn<TransportePessoal, String> nomeTColumn;
+    private TableColumn<TransporteCargaInanimada, String> nomeTColumn;
 
     @FXML
-    private TableColumn<TransportePessoal, String> descricaoTColumn;
+    private TableColumn<TransporteCargaInanimada, String> descricaoTColumn;
 
     @FXML
-    private TableColumn<TransportePessoal, Double> pesoTColumn;
+    private TableColumn<TransporteCargaInanimada, Double> pesoTColumn;
 
     @FXML
-    private TableColumn<TransportePessoal, String> distanciaTColumn;
+    private TableColumn<TransporteCargaInanimada, String> distanciaTColumn;
 
     @FXML
-    private TableColumn<TransportePessoal, Integer> passageirosTColumn;
+    private TableColumn<TransporteCargaInanimada, String> protegidoTColumn;
 
     @FXML
-    private TableColumn<TransportePessoal, Estado> situacaoTColumn;
+    private TableColumn<TransporteCargaInanimada, Estado> situacaoTColumn;
 
     @FXML
-    private TableColumn<TransportePessoal, String> custoTColumn;
+    private TableColumn<TransporteCargaInanimada, String> custoTColumn;
 
     @FXML
     private Button sairButton;
@@ -53,7 +53,7 @@ public class RelatorioTransportePessoalController {
 
     @FXML
     private void initialize() {
-        tabelaTransportePessoal.setPlaceholder(new javafx.scene.control.Label("Nenhum transporte cadastrado."));
+        tabelaTransporteInanimado.setPlaceholder(new javafx.scene.control.Label("Nenhum transporte cadastrado."));
         codigoTColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getNumero()).asObject());
         nomeTColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getNomeCliente()));
         descricaoTColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDescricao()));
@@ -61,10 +61,14 @@ public class RelatorioTransportePessoalController {
         distanciaTColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(
                 String.format("%.2f", cellData.getValue().calculaDistancia())
         ));
-        passageirosTColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getQtdPessoas()).asObject());
+        protegidoTColumn.setCellValueFactory(cellData -> {
+            boolean protegido = cellData.getValue().isCargaPerigosa();
+            String protegidoString = protegido ? "Sim" : "Não";
+            return new javafx.beans.property.SimpleStringProperty(protegidoString);
+        });
         situacaoTColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().getSituacao()));
         custoTColumn.setCellValueFactory(cellData -> {
-            TransportePessoal transporte = cellData.getValue();
+            TransporteCargaInanimada transporte = cellData.getValue();
             double custo = transporte.getDrone() != null ? transporte.calculaCusto() : 0.0;
             String custoFormatado = String.format("%.2f", custo);
             return new javafx.beans.property.SimpleStringProperty(custoFormatado);
@@ -72,12 +76,12 @@ public class RelatorioTransportePessoalController {
     }
 
     private void carregarDados() {
-        List<TransportePessoal> transportes = app.getTransportes().stream()
-                .filter(TransportePessoal.class::isInstance)
-                .map(TransportePessoal.class::cast)
+        List<TransporteCargaInanimada> transportes = app.getTransportes().stream()
+                .filter(TransporteCargaInanimada.class::isInstance)
+                .map(TransporteCargaInanimada.class::cast)
                 .collect(Collectors.toList());
-        tabelaTransportePessoal.getItems().clear();
-        tabelaTransportePessoal.getItems().addAll(transportes);
+        tabelaTransporteInanimado.getItems().clear();
+        tabelaTransporteInanimado.getItems().addAll(transportes);
     }
 
     @FXML
@@ -86,4 +90,3 @@ public class RelatorioTransportePessoalController {
         stage.close();
     }
 }
-

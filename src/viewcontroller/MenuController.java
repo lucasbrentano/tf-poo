@@ -32,6 +32,7 @@ public class MenuController {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Cadastro de Transporte");
+            stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
 
             stage.showAndWait();
@@ -56,6 +57,7 @@ public class MenuController {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Cadastro de Drones");
+            stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
 
             stage.showAndWait();
@@ -80,6 +82,7 @@ public class MenuController {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Processar Transporte");
+            stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
 
             stage.showAndWait();
@@ -104,6 +107,7 @@ public class MenuController {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Relatório Geral");
+            stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
 
             stage.showAndWait();

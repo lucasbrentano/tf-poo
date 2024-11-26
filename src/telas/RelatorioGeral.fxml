@@ -18,18 +18,18 @@
             <VBox alignment="TOP_CENTER" layoutX="93.0" layoutY="90.0" prefHeight="200.0" prefWidth="200.0" spacing="15.0">
                <children>
                   <Button fx:id="botaoTransportePessoal" mnemonicParsing="false" onAction="#handleTransportePessoal" prefHeight="50.0" prefWidth="200.0" text="Transporte Pessoal" />
-                  <Button fx:id="botaoTransporteInanimado" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Transporte Carga Inanimada" />
-                  <Button fx:id="botaoTransporteVivo" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Transporte Carga Viva" />
+                  <Button fx:id="botaoTransporteInanimado" mnemonicParsing="false" onAction="#handleTransporteInanimado" prefHeight="50.0" prefWidth="200.0" text="Transporte Carga Inanimada" />
+                  <Button fx:id="botaoTransporteVivo" mnemonicParsing="false" onAction="#handleTransporteVivo" prefHeight="50.0" prefWidth="200.0" text="Transporte Carga Viva" />
                </children>
             </VBox>
             <VBox alignment="TOP_CENTER" layoutX="347.0" layoutY="90.0" prefHeight="200.0" prefWidth="200.0" spacing="15.0">
                <children>
-                  <Button fx:id="botaoDronePessoal" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Drone Pessoal" />
-                  <Button fx:id="botaoDroneInanimado" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Drone Carga Inanimada" />
-                  <Button fx:id="botaoDroneVivo" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" text="Drone Carga Viva" />
+                  <Button fx:id="botaoDronePessoal" mnemonicParsing="false" onAction="#handleDronePessoal" prefHeight="50.0" prefWidth="200.0" text="Drone Pessoal" />
+                  <Button fx:id="botaoDroneInanimado" mnemonicParsing="false" onAction="#handleDroneInanimado" prefHeight="50.0" prefWidth="200.0" text="Drone Carga Inanimada" />
+                  <Button fx:id="botaoDroneVivo" mnemonicParsing="false" onAction="#handleDroneVivo" prefHeight="50.0" prefWidth="200.0" text="Drone Carga Viva" />
                </children>
             </VBox>
-            <Button fx:id="botaoSair" layoutX="290.0" layoutY="325.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="60.0" text="Sair" />
+            <Button fx:id="sairButton" layoutX="290.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleSair" prefHeight="26.0" prefWidth="60.0" text="Sair" />
          </children>
       </AnchorPane>
    </children>

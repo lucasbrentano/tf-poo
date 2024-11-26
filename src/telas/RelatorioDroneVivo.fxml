@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="viewcontroller.MenuController">
+<VBox prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="viewcontroller.RelatorioDroneVivoController">
    <children>
       <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
@@ -17,14 +17,14 @@
                   <Font size="36.0" />
                </font>
             </Label>
-            <Button layoutX="1006.0" layoutY="680.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="60.0" text="Sair" />
-            <TableView layoutX="14.0" layoutY="66.0" prefHeight="600.0" prefWidth="1045.0">
+            <Button layoutX="1006.0" layoutY="680.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="60.0" text="Sair" fx:id="sairButton" onAction="#handleSair" />
+            <TableView layoutX="14.0" layoutY="66.0" prefHeight="600.0" prefWidth="1045.0" fx:id="tabelaDroneVivo">
                <columns>
-                  <TableColumn prefWidth="75.0" text="Codigo" />
-                  <TableColumn prefWidth="75.0" text="Autonomia" />
-                  <TableColumn prefWidth="75.0" text="Peso Maximo" />
-                  <TableColumn prefWidth="75.0" text="Climatizado" />
-                  <TableColumn prefWidth="75.0" text="Custo Fixo" />
+                  <TableColumn prefWidth="75.0" text="Codigo" fx:id="codigoColumn"/>
+                  <TableColumn prefWidth="75.0" text="Autonomia (km)" fx:id="autonomiaColumn"/>
+                  <TableColumn prefWidth="75.0" text="Peso Maximo (kg)" fx:id="pesoColumn"/>
+                  <TableColumn prefWidth="75.0" text="Climatizado" fx:id="climatizadoColumn"/>
+                  <TableColumn prefWidth="75.0" text="Custo Fixo (R$)" fx:id="custoFixoColumn"/>
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

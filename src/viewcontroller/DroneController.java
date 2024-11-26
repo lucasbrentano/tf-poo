@@ -69,6 +69,9 @@ public class DroneController {
 
     @FXML
     public void initialize() {
+        pessoalTableView.setPlaceholder(new javafx.scene.control.Label("Nenhum drone cadastrado."));
+        inanimadaTableView.setPlaceholder(new javafx.scene.control.Label("Nenhum drone cadastrado."));
+        vivaTableView.setPlaceholder(new javafx.scene.control.Label("Nenhum drone cadastrado."));
         codigoPessoalColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getCodigo()).asObject());
         custoPessoalColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getCustoFixo()).asObject());
         autonomiaPessoalColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getAutonomia()).asObject());

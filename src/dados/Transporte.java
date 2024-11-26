@@ -1,5 +1,6 @@
 package dados;
 
+
 public abstract class Transporte {
 
 	private int numero;
@@ -92,26 +93,22 @@ public abstract class Transporte {
 	}
 
 	public double calculaDistancia() {
-		final int RAIO_TERRA_KM = 6371; // Raio médio da Terra em quilômetros
+		final int RAIO_TERRA_KM = 6371;
 
-		// Converter graus para radianos
 		double latOrigemRad = Math.toRadians(this.latitudeOrigem);
 		double lonOrigemRad = Math.toRadians(this.longitudeOrigem);
 		double latDestinoRad = Math.toRadians(this.latitudeDestino);
 		double lonDestinoRad = Math.toRadians(this.longitudeDestino);
 
-		// Diferenças das coordenadas
 		double deltaLat = latDestinoRad - latOrigemRad;
 		double deltaLon = lonDestinoRad - lonOrigemRad;
 
-		// Aplicar a fórmula do Haversine
 		double a = Math.pow(Math.sin(deltaLat / 2), 2) +
 				Math.cos(latOrigemRad) * Math.cos(latDestinoRad) *
 						Math.pow(Math.sin(deltaLon / 2), 2);
 
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-		// Calcular a distância
 		return RAIO_TERRA_KM * c;
 	}
 

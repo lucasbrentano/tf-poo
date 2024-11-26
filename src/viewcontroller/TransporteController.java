@@ -122,6 +122,9 @@ public class TransporteController {
 
     @FXML
     public void initialize() {
+        pessoalTable.setPlaceholder(new javafx.scene.control.Label("Nenhum transporte cadastrado."));
+        inanimadoTable.setPlaceholder(new javafx.scene.control.Label("Nenhum transporte cadastrado."));
+        vivoTable.setPlaceholder(new javafx.scene.control.Label("Nenhum transporte cadastrado."));
         cargaPerigosaLabel.setVisible(false);
         cargaPerigosaSim.setVisible(false);
         cargaPerigosaNao.setVisible(false);

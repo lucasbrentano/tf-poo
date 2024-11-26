@@ -22,6 +22,14 @@ public class TransporteCargaViva extends Transporte {
 		}
 	}
 
+	public double getTemperaturaMinima() {
+		return temperaturaMinima;
+	}
+
+	public double getTemperaturaMaxima() {
+		return temperaturaMaxima;
+	}
+
 	public boolean isClimatizado() {
 		return climatizado;
 	}
