@@ -27,8 +27,4 @@ public class DronePessoal extends Drone {
 		return custo;
 	}
 
-	@Override
-	public String geraTexto() {
-		return super.geraTexto() + "|Limite de Passageiros: " + qtdMaxPessoas;
-	}
 }

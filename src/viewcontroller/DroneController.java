@@ -199,7 +199,10 @@ public class DroneController {
                     case "Pessoal":
                         int numeroPassageiros = Integer.parseInt(passageirosTField.getText());
                         Drone dronePessoal = new DronePessoal(codigo, custoFixo, autonomia, numeroPassageiros);
-                        if (app.cadastrarDrone(dronePessoal)) {
+                        if (codigo < 0 || custoFixo < 0 || autonomia < 0 || numeroPassageiros < 0) {
+                            imprimeTField.setText("Erro: Entrada inválida de dados. Verifique os campos numéricos.");
+                        } else {
+                            app.cadastrarDrone(dronePessoal);
                             imprimeTField.setText("Drone cadastrado com sucesso!");
                         }
                         break;
@@ -207,7 +210,10 @@ public class DroneController {
                         boolean protecao = protecaoCB.isSelected();
                         double peso = Double.parseDouble(pesoMaximoTField.getText());
                         Drone droneCargaInanimada = new DroneCargaInanimada(codigo, custoFixo, autonomia, peso, protecao);
-                        if (app.cadastrarDrone(droneCargaInanimada)) {
+                        if (codigo < 0 || custoFixo < 0 || autonomia < 0 || peso < 0) {
+                            imprimeTField.setText("Erro: Entrada inválida de dados. Verifique os campos numéricos.");
+                        } else {
+                            app.cadastrarDrone(droneCargaInanimada);
                             imprimeTField.setText("Drone cadastrado com sucesso!");
                         }
                         break;
@@ -215,7 +221,10 @@ public class DroneController {
                         boolean climatizado = climatizadoCB.isSelected();
                         peso = Double.parseDouble(pesoMaximoTField.getText());
                         Drone droneCargaViva = new DroneCargaViva(codigo, custoFixo, autonomia, peso, climatizado);
-                        if (app.cadastrarDrone(droneCargaViva)) {
+                        if (codigo < 0 || custoFixo < 0 || autonomia < 0 || peso < 0) {
+                            imprimeTField.setText("Erro: Entrada inválida de dados. Verifique os campos numéricos.");
+                        } else {
+                            app.cadastrarDrone(droneCargaViva);
                             imprimeTField.setText("Drone cadastrado com sucesso!");
                         }
                         break;

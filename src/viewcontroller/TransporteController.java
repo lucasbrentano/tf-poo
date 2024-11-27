@@ -387,13 +387,21 @@ public class TransporteController {
                     int numeroPassageiros = Integer.parseInt(numeroPassageirosField.getText());
                     Transporte transportePessoal = new TransportePessoal(numero, nome, descricao, peso, latitudeOrigem,
                             latitudeDestino, longitudeOrigem, longitudeDestino, numeroPassageiros);
-                    cadastraTransporte(transportePessoal);
+                    if (numero < 0 || peso < 0 || numeroPassageiros < 0) {
+                        imprimeTextField.setText("Erro: Entrada inválida de dados. Verifique os campos numéricos.");
+                    } else {
+                        cadastraTransporte(transportePessoal);
+                    }
                     break;
                 case "Carga Inanimada":
                     boolean cargaPerigosa = cargaPerigosaSim.isSelected();
                     Transporte transporteCargaInanimada = new TransporteCargaInanimada(numero, nome, descricao, peso,
                             latitudeOrigem, latitudeDestino, longitudeOrigem, longitudeDestino, cargaPerigosa);
-                    cadastraTransporte(transporteCargaInanimada);
+                    if (numero < 0 || peso < 0) {
+                        imprimeTextField.setText("Erro: Entrada inválida de dados. Verifique os campos numéricos.");
+                    } else {
+                        cadastraTransporte(transporteCargaInanimada);
+                    }
                     break;
                 case "Carga Viva":
                     boolean climatizado = climatizadoSim.isSelected();
@@ -408,9 +416,13 @@ public class TransporteController {
                     }
 
                     Transporte transporteCargaViva = new TransporteCargaViva(numero, nome, descricao, peso,
-                            latitudeOrigem, latitudeDestino, longitudeOrigem, longitudeDestino, climatizado,
-                            temperaturaMinima, temperaturaMaxima);
+                            latitudeOrigem, latitudeDestino, longitudeOrigem, longitudeDestino, temperaturaMinima,
+                            temperaturaMaxima);
+                    if (numero > 0 || peso > 0) {
+                        imprimeTextField.setText("Erro: Entrada inválida de dados. Verifique os campos numéricos.");
+                    } else {
                     cadastraTransporte(transporteCargaViva);
+                    }
                     break;
                 default:
                     imprimeTextField.setText("Erro: Selecione um tipo de transporte.");

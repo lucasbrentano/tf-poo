@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.Queue;
 
@@ -56,14 +57,17 @@ public class ProcessarTransporteController {
             Queue<Transporte> filaTransporte = app.getFilaTransporte();
             boolean algumTransporteProcessado = false;
 
-            for (Transporte transporte : filaTransporte) {
+            Iterator<Transporte> iterator = filaTransporte.iterator();
+            while (iterator.hasNext()) {
+                Transporte transporte = iterator.next();
+
                 Optional<Drone> droneDisponivel = app.getFrota().stream()
                         .filter(drone -> isDroneCompativelComTransporte(drone, transporte))
                         .findFirst();
 
                 if (droneDisponivel.isPresent()) {
                     Drone drone = droneDisponivel.get();
-                    filaTransporte.remove(transporte);
+                    iterator.remove();  // Remover de forma segura
                     transporte.setDrone(drone);
                     transporte.setSituacao(Estado.ALOCADO);
                     algumTransporteProcessado = true;
@@ -71,7 +75,7 @@ public class ProcessarTransporteController {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Transporte Processado");
                     alert.setHeaderText(null);
-                    alert.setContentText("Transporte " + transporte.getNumero() + " foi designado ao drone " + drone.getCodigo() + ".");
+                    alert.setContentText("Transporte " + transporte.getNumero() + " foi designado ao Drone " + drone.getCodigo() + ".");
                     alert.showAndWait();
                 }
             }
@@ -93,6 +97,7 @@ public class ProcessarTransporteController {
             alert.showAndWait();
         }
     }
+
 
     private boolean isDroneCompativelComTransporte(Drone drone, Transporte transporte) {
         if (drone instanceof DronePessoal && transporte instanceof TransportePessoal) {

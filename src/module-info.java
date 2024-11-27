@@ -8,4 +8,5 @@ module telas {
     opens inicializa to javafx.fxml;
     exports viewcontroller;
     opens viewcontroller to javafx.fxml;
+    exports dados;
 }

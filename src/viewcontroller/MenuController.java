@@ -65,7 +65,7 @@ public class MenuController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erro ao Carregar Tela de Cadastro");
             alert.setHeaderText(null);
-            alert.setContentText("Ocorreu um erro ao tentar abrir a tela de cadastro de transporte: " + e.getMessage());
+            alert.setContentText("Ocorreu um erro ao tentar abrir a tela de cadastro de drones: " + e.getMessage());
             alert.showAndWait();
         }
     }
@@ -88,9 +88,9 @@ public class MenuController {
             stage.showAndWait();
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao Carregar Tela de Cadastro");
+            alert.setTitle("Erro ao Carregar Tela de Processar");
             alert.setHeaderText(null);
-            alert.setContentText("Ocorreu um erro ao tentar abrir a tela de cadastro de transporte: " + e.getMessage());
+            alert.setContentText("Ocorreu um erro ao tentar abrir a tela de processar transporte: " + e.getMessage());
             alert.showAndWait();
         }
     }
@@ -113,9 +113,129 @@ public class MenuController {
             stage.showAndWait();
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro ao Carregar Tela de Cadastro");
+            alert.setTitle("Erro ao Carregar Tela de Relatório Geral");
             alert.setHeaderText(null);
-            alert.setContentText("Ocorreu um erro ao tentar abrir a tela de cadastro de transporte: " + e.getMessage());
+            alert.setContentText("Ocorreu um erro ao tentar abrir a tela de relatório geral: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    public void handleRelatorioTransporte() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/telas/RelatorioTransporte.fxml"));
+            Parent root = loader.load();
+
+            RelatorioTransporteController relatorioTransporteController = loader.getController();
+            relatorioTransporteController.setACMEAirDrones(app);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Relatorio Transporte");
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            stage.showAndWait();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao Carregar Tela de Relatório Transporte");
+            alert.setHeaderText(null);
+            alert.setContentText("Ocorreu um erro ao tentar abrir a tela de relatório de transporte: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    public void handleAtualizaTransporte() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/telas/AtualizaTransporte.fxml"));
+            Parent root = loader.load();
+
+            AtualizaTransporteController atualizaTransporteController = loader.getController();
+            atualizaTransporteController.setACMEAirDrones(app);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Atualiza Transporte");
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            stage.showAndWait();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao Carregar Tela de Atualizar Transporte");
+            alert.setHeaderText(null);
+            alert.setContentText("Ocorreu um erro ao tentar abrir a tela de atualizar transporte: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    public void handleSimulacao() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/telas/Simulacao.fxml"));
+            Parent root = loader.load();
+
+            SimulacaoController simulacaoController = loader.getController();
+            simulacaoController.setACMEAirDrones(app);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Simulação");
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            stage.showAndWait();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao Carregar Tela de Simulação");
+            alert.setHeaderText(null);
+            alert.setContentText("Ocorreu um erro ao tentar abrir a tela de simulação: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    public void handleSalvar () {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/telas/Salvar.fxml"));
+            Parent root = loader.load();
+
+            SalvarController salvarController = loader.getController();
+            salvarController.setACMEAirDrones(app);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Salvar");
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            stage.showAndWait();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao Carregar Tela de Salvar");
+            alert.setHeaderText(null);
+            alert.setContentText("Ocorreu um erro ao tentar abrir a tela de salvar arquivos: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    public void handleCarregar () {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/telas/Carregar.fxml"));
+            Parent root = loader.load();
+
+            CarregarController carregarController = loader.getController();
+            carregarController.setACMEAirDrones(app);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Carregar");
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            stage.showAndWait();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao Carregar Tela de Carregar");
+            alert.setHeaderText(null);
+            alert.setContentText("Ocorreu um erro ao tentar abrir a tela de carregar arquivos" + e.getMessage());
             alert.showAndWait();
         }
     }
@@ -125,7 +245,7 @@ public class MenuController {
     }
 
     @FXML
-    private void handleSair() {
+    public void handleSair() {
         Platform.exit();
     }
 }

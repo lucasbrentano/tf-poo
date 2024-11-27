@@ -1,0 +1,4 @@
+tipo;numero;nomecliente;descricao;peso;latorigem;longorigem;latdestino;longdestino;qtdpessoas_perigosa_tempmin;tempmax;estado;droneassociado
+3;222;Joana Santos;Pandas;250.3;-30.027593;-27.597393;-51.227884;-48.55289;20.1;30.9;ALOCADO;33
+1;111;Maria da Silva;Trabalho;140.1;-30.02719;-30.061458;-51.161572;-51.173695;2;;ALOCADO;11
+2;333;Mario da Silva;Chocolate;150.2;-29.378867;-30.02719;-50.873611;-51.161572;true;;ALOCADO;22

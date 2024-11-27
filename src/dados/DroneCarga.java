@@ -13,8 +13,4 @@ public abstract class DroneCarga extends Drone {
 		return pesoMaximo;
 	}
 
-	@Override
-	public String geraTexto() {
-		return super.geraTexto() + "|Peso: " + pesoMaximo;
-	}
 }

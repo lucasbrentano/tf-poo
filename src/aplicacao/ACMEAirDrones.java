@@ -7,13 +7,13 @@ import java.util.*;
 
 public class ACMEAirDrones {
 
-    private Collection<Drone> frota;
-    private Collection<Transporte> transportes;
+    private List<Drone> frota;
+    private List<Transporte> transportes;
     private Queue<Transporte> filaTransporte;
 
     public ACMEAirDrones() {
-        frota = new TreeSet<Drone>(Comparator.comparingInt(Drone::getCodigo));
-        transportes = new TreeSet<Transporte>(Comparator.comparingInt(Transporte::getNumero));
+        frota = new ArrayList<Drone>();
+        transportes = new ArrayList<Transporte>();
         filaTransporte = new LinkedList<>();
     }
 
@@ -41,15 +41,24 @@ public class ACMEAirDrones {
         }
     }
 
-    public Collection<Drone> getFrota() {
+    public List<Drone> getFrota() {
         return frota;
     }
 
-    public Collection<Transporte> getTransportes() {
+    public List<Transporte> getTransportes() {
         return transportes;
     }
 
     public Queue<Transporte> getFilaTransporte() {
         return filaTransporte;
+    }
+
+    public Drone getDroneByCodigo(int codigo) {
+        for (Drone d : frota) {
+            if (d.getCodigo() == codigo) {
+                return d;
+            }
+        }
+        return null;
     }
 }
