@@ -142,7 +142,7 @@ public class SimulacaoController {
                         double latDestino = Double.parseDouble(token[7]);
                         double lonDestino = Double.parseDouble(token[8]);
                         boolean perigosa = Boolean.parseBoolean(token[9]);
-                        Transporte transporte = new TransporteCargaInanimada(numeroTransporte, nomeCliente, descricao, pesoCarga, latOrigem, lonOrigem, latDestino, lonDestino, perigosa);
+                        Transporte transporte = new TransporteCargaInanimada(numeroTransporte, nomeCliente, descricao, pesoCarga, latOrigem, latDestino, lonOrigem, lonDestino, perigosa);
                         if (app.cadastrarTransporte(transporte)) {
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle("Transporte cadastrado");
@@ -175,7 +175,7 @@ public class SimulacaoController {
                         double lonDestino = Double.parseDouble(token[8]);
                         double tempMin = Double.parseDouble(token[9]);
                         double tempMax = Double.parseDouble(token[10]);
-                        Transporte transporte = new TransporteCargaViva(numeroTransporte, nomeCliente, descricao, pesoCarga, latOrigem, lonOrigem, latDestino, lonDestino, tempMin, tempMax);
+                        Transporte transporte = new TransporteCargaViva(numeroTransporte, nomeCliente, descricao, pesoCarga, latOrigem, latDestino, lonOrigem, lonDestino, tempMin, tempMax);
                         if (app.cadastrarTransporte(transporte)) {
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle("Transporte cadastrado");
@@ -207,7 +207,7 @@ public class SimulacaoController {
                         double latDestino = Double.parseDouble(token[7]);
                         double lonDestino = Double.parseDouble(token[8]);
                         int qtdPassageiros = Integer.parseInt(token[9]);
-                        Transporte transporte = new TransportePessoal(numeroTransporte, nomeCliente, descricao, pesoCarga, latOrigem, lonOrigem, latDestino, lonDestino, qtdPassageiros);
+                        Transporte transporte = new TransportePessoal(numeroTransporte, nomeCliente, descricao, pesoCarga, latOrigem, latDestino, lonOrigem, lonDestino, qtdPassageiros);
                         if (app.cadastrarTransporte(transporte)) {
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle("Transporte cadastrado");
