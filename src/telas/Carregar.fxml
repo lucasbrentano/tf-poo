@@ -16,9 +16,9 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="nomeField" layoutX="118.0" layoutY="88.0" prefHeight="25.0" prefWidth="165.0" promptText="Informe o nome do Arquivo" />
-            <Button fx:id="sairButton" layoutX="324.0" layoutY="161.0" mnemonicParsing="false" onAction="#handleSair" prefHeight="25.0" prefWidth="62.0" text="Sair" />
-            <Button fx:id="carregarButton" layoutX="14.0" layoutY="161.0" mnemonicParsing="false" onAction="#handleCarregar" prefHeight="25.0" prefWidth="62.0" text="Carregar" />
+            <TextField fx:id="nomeField" layoutX="108.0" layoutY="87.0" prefHeight="26.0" prefWidth="185.0" promptText="Informe o nome do Arquivo" />
+            <Button fx:id="sairButton" layoutX="306.0" layoutY="161.0" mnemonicParsing="false" onAction="#handleSair" prefHeight="26.0" prefWidth="80.0" text="Sair" />
+            <Button fx:id="carregarButton" layoutX="14.0" layoutY="161.0" mnemonicParsing="false" onAction="#handleCarregar" prefHeight="26.0" prefWidth="80.0" text="Carregar" />
             <Label layoutX="153.0" layoutY="61.0" text="Nome do Arquivo" />
          </children>
       </AnchorPane>
