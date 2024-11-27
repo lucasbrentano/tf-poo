@@ -1,9 +1,10 @@
 package dados;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.TreeSet;
 
-public abstract class Drone {
+public abstract class Drone implements Comparable<Drone> {
 
 	private int codigo;
 
@@ -17,7 +18,7 @@ public abstract class Drone {
 		this.codigo = codigo;
 		this.custoFixo = custoFixo;
 		this.autonomia = autonomia;
-		this.transporte = new TreeSet<Transporte>();
+		this.transporte = new HashSet<Transporte>();
 	}
 
 	public int getCodigo() {
@@ -36,7 +37,14 @@ public abstract class Drone {
 		return new TreeSet<>(transporte);
 	}
 
-	public abstract boolean adicionaTransporte(Transporte transporte);
+	public boolean adicionaTransporte(Transporte transporte) {
+		return this.transporte.add(transporte);
+	}
 
 	public abstract double calculaCustoKm();
+
+	@Override
+	public int compareTo(Drone d) {
+		return Integer.compare(this.codigo, d.getCodigo());
+	}
 }

@@ -70,6 +70,7 @@ public class ProcessarTransporteController {
                     iterator.remove();  // Remover de forma segura
                     transporte.setDrone(drone);
                     transporte.setSituacao(Estado.ALOCADO);
+                    drone.adicionaTransporte(transporte);
                     algumTransporteProcessado = true;
 
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);

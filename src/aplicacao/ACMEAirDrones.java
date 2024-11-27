@@ -1,6 +1,7 @@
 package aplicacao;
 
 import dados.Drone;
+import dados.Estado;
 import dados.Transporte;
 
 import java.util.*;
@@ -12,7 +13,7 @@ public class ACMEAirDrones {
     private Queue<Transporte> filaTransporte;
 
     public ACMEAirDrones() {
-        frota = new HashSet<Drone>();
+        frota = new TreeSet<Drone>();
         transportes = new HashSet<Transporte>();
         filaTransporte = new LinkedList<>();
     }
@@ -25,7 +26,9 @@ public class ACMEAirDrones {
         boolean existe = transportes.stream().anyMatch(t -> t.getNumero() == transporte.getNumero());
         if (!existe) {
             transportes.add(transporte);
-            filaTransporte.add(transporte);
+            if (transporte.getSituacao() == Estado.PENDENTE) {
+                filaTransporte.add(transporte);
+            }
             return true;
         } else {
             return false;
