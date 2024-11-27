@@ -418,7 +418,7 @@ public class TransporteController {
                     Transporte transporteCargaViva = new TransporteCargaViva(numero, nome, descricao, peso,
                             latitudeOrigem, latitudeDestino, longitudeOrigem, longitudeDestino, temperaturaMinima,
                             temperaturaMaxima);
-                    if (numero > 0 || peso > 0) {
+                    if (numero < 0 || peso < 0) {
                         imprimeTextField.setText("Erro: Entrada inválida de dados. Verifique os campos numéricos.");
                     } else {
                     cadastraTransporte(transporteCargaViva);
