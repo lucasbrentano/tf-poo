@@ -144,7 +144,6 @@ public class SimulacaoController {
                         boolean perigosa = Boolean.parseBoolean(token[9]);
                         Transporte transporte = new TransporteCargaInanimada(numeroTransporte, nomeCliente, descricao, pesoCarga, latOrigem, lonOrigem, latDestino, lonDestino, perigosa);
                         if (app.cadastrarTransporte(transporte)) {
-                            app.getFilaTransporte().add(transporte);
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle("Transporte cadastrado");
                             alert.setHeaderText("Transporte cadastrado com sucesso!");
@@ -178,7 +177,6 @@ public class SimulacaoController {
                         double tempMax = Double.parseDouble(token[10]);
                         Transporte transporte = new TransporteCargaViva(numeroTransporte, nomeCliente, descricao, pesoCarga, latOrigem, lonOrigem, latDestino, lonDestino, tempMin, tempMax);
                         if (app.cadastrarTransporte(transporte)) {
-                            app.getFilaTransporte().add(transporte);
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle("Transporte cadastrado");
                             alert.setHeaderText("Transporte cadastrado com sucesso!");
@@ -211,7 +209,6 @@ public class SimulacaoController {
                         int qtdPassageiros = Integer.parseInt(token[9]);
                         Transporte transporte = new TransportePessoal(numeroTransporte, nomeCliente, descricao, pesoCarga, latOrigem, lonOrigem, latDestino, lonDestino, qtdPassageiros);
                         if (app.cadastrarTransporte(transporte)) {
-                            app.getFilaTransporte().add(transporte);
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle("Transporte cadastrado");
                             alert.setHeaderText("Transporte cadastrado com sucesso!");
