@@ -11,8 +11,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import dados.Drone;
 import dados.DronePessoal;
 import dados.DroneCargaViva;
@@ -59,8 +60,8 @@ public class CarregarController {
         }
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line = br.readLine(); // Ignora o cabeçalho
-            Collection<Drone> drones = new ArrayList<>();
+            String line = br.readLine();
+            //Set<Drone> drones = new HashSet<>();
 
             while ((line = br.readLine()) != null) {
                 String[] token = line.split(";");
@@ -68,27 +69,30 @@ public class CarregarController {
                 int codigo = Integer.parseInt(token[1]);
                 double custoFixo = Double.parseDouble(token[2]);
                 double autonomia = Double.parseDouble(token[3]);
-
+                Drone drone;
                 switch (tipo) {
                     case 1:
                         int qtdMaxPessoas = Integer.parseInt(token[4]);
-                        drones.add(new DronePessoal(codigo, custoFixo, autonomia, qtdMaxPessoas));
+                        drone = new DronePessoal(codigo, custoFixo, autonomia, qtdMaxPessoas);
+                        app.cadastrarDrone(drone);
                         break;
                     case 2:
                         double pesoMaximo = Double.parseDouble(token[4]);
                         boolean protecao = Boolean.parseBoolean(token[5]);
-                        drones.add(new DroneCargaInanimada(codigo, custoFixo, autonomia, pesoMaximo, protecao));
+                        drone = new DroneCargaInanimada(codigo, custoFixo, autonomia, pesoMaximo, protecao);
+                        app.cadastrarDrone(drone);
                         break;
                     case 3:
                         double pesoMaximoViva = Double.parseDouble(token[4]);
                         boolean climatizado = Boolean.parseBoolean(token[5]);
-                        drones.add(new DroneCargaViva(codigo, custoFixo, autonomia, pesoMaximoViva, climatizado));
+                        drone = new DroneCargaViva(codigo, custoFixo, autonomia, pesoMaximoViva, climatizado);
+                        app.cadastrarDrone(drone);
                         break;
                 }
             }
 
             if (app != null) {
-                app.getFrota().addAll(drones);
+                //app.getFrota().addAll(drones);
                 mostrarAlerta("Sucesso", "Drones Carregados", "Os drones foram carregados com sucesso do arquivo " + nomeArquivo);
             }
         } catch (IOException e) {
@@ -104,8 +108,8 @@ public class CarregarController {
         }
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line = br.readLine(); // Ignora o cabeçalho
-            Collection<Transporte> transportes = new ArrayList<>();
+            String line = br.readLine();
+            Set<Transporte> transportes = new HashSet<>();
 
             while ((line = br.readLine()) != null) {
                 String[] token = line.split(";");
@@ -120,41 +124,48 @@ public class CarregarController {
                 double longDestino = Double.parseDouble(token[8]);
                 Estado situacao = Estado.valueOf(token[11]);
                 String droneAssociado = token[12];
+                Transporte transporte;
 
                 switch (tipo) {
                     case 1:
                         int qtdPessoas = Integer.parseInt(token[9]);
-                        TransportePessoal transportePessoal = new TransportePessoal(numero, nomeCliente, descricao, peso, latOrigem, latDestino, longOrigem, longDestino, qtdPessoas);
-                        transportePessoal.setSituacao(situacao);
+                        transporte = new TransportePessoal(numero, nomeCliente, descricao, peso, latOrigem, latDestino, longOrigem, longDestino, qtdPessoas);
+                        transporte.setSituacao(situacao);
                         if (!"null".equals(droneAssociado)) {
-                            transportePessoal.setDrone(app.getDroneByCodigo(Integer.parseInt(droneAssociado)));
+                            transporte.setDrone(app.getDroneByCodigo(Integer.parseInt(droneAssociado)));
                         }
-                        transportes.add(transportePessoal);
+                        if (app.cadastrarTransporte(transporte)) {
+                            transportes.add(transporte);
+                        };
                         break;
                     case 2:
                         boolean perigosa = Boolean.parseBoolean(token[9]);
-                        TransporteCargaInanimada transporteCargaInanimada = new TransporteCargaInanimada(numero, nomeCliente, descricao, peso, latOrigem, latDestino, longOrigem, longDestino, perigosa);
-                        transporteCargaInanimada.setSituacao(situacao);
+                        transporte = new TransporteCargaInanimada(numero, nomeCliente, descricao, peso, latOrigem, latDestino, longOrigem, longDestino, perigosa);
+                        transporte.setSituacao(situacao);
                         if (!"null".equals(droneAssociado)) {
-                            transporteCargaInanimada.setDrone(app.getDroneByCodigo(Integer.parseInt(droneAssociado)));
+                            transporte.setDrone(app.getDroneByCodigo(Integer.parseInt(droneAssociado)));
                         }
-                        transportes.add(transporteCargaInanimada);
+                        if (app.cadastrarTransporte(transporte)) {
+                            transportes.add(transporte);
+                        };
                         break;
                     case 3:
                         double tempMin = Double.parseDouble(token[9]);
                         double tempMax = Double.parseDouble(token[10]);
-                        TransporteCargaViva transporteCargaViva = new TransporteCargaViva(numero, nomeCliente, descricao, peso, latOrigem, latDestino, longOrigem, longDestino, tempMin, tempMax);
-                        transporteCargaViva.setSituacao(situacao);
+                        transporte = new TransporteCargaViva(numero, nomeCliente, descricao, peso, latOrigem, latDestino, longOrigem, longDestino, tempMin, tempMax);
+                        transporte.setSituacao(situacao);
                         if (!"null".equals(droneAssociado)) {
-                            transporteCargaViva.setDrone(app.getDroneByCodigo(Integer.parseInt(droneAssociado)));
+                            transporte.setDrone(app.getDroneByCodigo(Integer.parseInt(droneAssociado)));
                         }
-                        transportes.add(transporteCargaViva);
+                        if(app.cadastrarTransporte(transporte)) {
+                            transportes.add(transporte);
+                        };
                         break;
                 }
             }
 
             if (app != null) {
-                app.getTransportes().addAll(transportes);
+                //app.getTransportes().addAll(transportes);
                 transportes.stream()
                         .filter(transporte -> transporte.getSituacao() == Estado.PENDENTE)
                         .forEach(app.getFilaTransporte()::add);

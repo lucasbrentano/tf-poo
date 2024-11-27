@@ -22,8 +22,6 @@ public abstract class Transporte {
 
 	private Drone drone;
 
-	public Transporte() {}
-
 	public Transporte(int numero, String nomeCliente, String descricao, double peso, double latitudeOrigem,
 					  double latitudeDestino, double longitudeOrigem, double longitudeDestino) {
 		this.numero = numero;
@@ -36,21 +34,6 @@ public abstract class Transporte {
 		this.longitudeDestino = longitudeDestino;
 		this.situacao = Estado.PENDENTE;
 		this.drone = null;
-	}
-
-	public Transporte(int numero, String nomeCliente, String descricao, double peso, double latitudeOrigem,
-					  double latitudeDestino, double longitudeOrigem, double longitudeDestino, Estado situacao,
-					  Drone drone) {
-		this.numero = numero;
-		this.nomeCliente = nomeCliente;
-		this.descricao = descricao;
-		this.peso = peso;
-		this.latitudeOrigem = latitudeOrigem;
-		this.latitudeDestino = latitudeDestino;
-		this.longitudeOrigem = longitudeOrigem;
-		this.longitudeDestino = longitudeDestino;
-		this.situacao = situacao;
-		this.drone = drone;
 	}
 
 	public int getNumero() {

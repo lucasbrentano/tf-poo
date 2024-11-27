@@ -8,8 +8,6 @@ public class TransporteCargaViva extends Transporte {
 
 	private double temperaturaMaxima;
 
-	public TransporteCargaViva() {}
-
 	public TransporteCargaViva(int numero, String nomeCliente, String descricao, double peso, double latitudeOrigem,
 							   double latitudeDestino, double longitudeOrigem, double longitudeDestino,
 							   double temperaturaMinima, double temperaturaMaxima) {

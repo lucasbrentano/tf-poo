@@ -7,13 +7,13 @@ import java.util.*;
 
 public class ACMEAirDrones {
 
-    private List<Drone> frota;
-    private List<Transporte> transportes;
+    private Set<Drone> frota;
+    private Set<Transporte> transportes;
     private Queue<Transporte> filaTransporte;
 
     public ACMEAirDrones() {
-        frota = new ArrayList<Drone>();
-        transportes = new ArrayList<Transporte>();
+        frota = new HashSet<Drone>();
+        transportes = new HashSet<Transporte>();
         filaTransporte = new LinkedList<>();
     }
 
@@ -41,11 +41,11 @@ public class ACMEAirDrones {
         }
     }
 
-    public List<Drone> getFrota() {
+    public Set<Drone> getFrota() {
         return frota;
     }
 
-    public List<Transporte> getTransportes() {
+    public Set<Transporte> getTransportes() {
         return transportes;
     }
 

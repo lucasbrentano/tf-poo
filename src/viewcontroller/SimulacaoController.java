@@ -42,7 +42,7 @@ public class SimulacaoController {
                         double pesoMaximo = Double.parseDouble(token[4]);
                         boolean protecao = Boolean.parseBoolean(token[5]);
                         Drone drone = new DroneCargaInanimada(codigoDrone, custoFixo, autonomia, pesoMaximo, protecao);
-                        if (app.getFrota().add(drone)) {
+                        if (app.cadastrarDrone(drone)) {
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle("Drone cadastrado");
                             alert.setHeaderText("Drone cadastrado com sucesso!");
@@ -70,7 +70,7 @@ public class SimulacaoController {
                         double pesoMaximo = Double.parseDouble(token[4]);
                         boolean climatizado = Boolean.parseBoolean(token[5]);
                         Drone drone = new DroneCargaViva(codigoDrone, custoFixo, autonomia, pesoMaximo, climatizado);
-                        if (app.getFrota().add(drone)) {
+                        if (app.cadastrarDrone(drone)) {
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle("Drone cadastrado");
                             alert.setHeaderText("Drone cadastrado com sucesso!");
@@ -97,7 +97,7 @@ public class SimulacaoController {
                         double autonomia = Double.parseDouble(token[3]);
                         int qtdMaxPessoas = Integer.parseInt(token[4]);
                         Drone drone = new DronePessoal(codigoDrone, custoFixo, autonomia, qtdMaxPessoas);
-                        if (app.getFrota().add(drone)) {
+                        if (app.cadastrarDrone(drone)) {
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle("Drone cadastrado");
                             alert.setHeaderText("Drone cadastrado com sucesso!");
@@ -143,7 +143,7 @@ public class SimulacaoController {
                         double lonDestino = Double.parseDouble(token[8]);
                         boolean perigosa = Boolean.parseBoolean(token[9]);
                         Transporte transporte = new TransporteCargaInanimada(numeroTransporte, nomeCliente, descricao, pesoCarga, latOrigem, lonOrigem, latDestino, lonDestino, perigosa);
-                        if (app.getTransportes().add(transporte)) {
+                        if (app.cadastrarTransporte(transporte)) {
                             app.getFilaTransporte().add(transporte);
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle("Transporte cadastrado");
@@ -176,9 +176,8 @@ public class SimulacaoController {
                         double lonDestino = Double.parseDouble(token[8]);
                         double tempMin = Double.parseDouble(token[9]);
                         double tempMax = Double.parseDouble(token[10]);
-                        Transporte transporte;
-                        transporte = new TransporteCargaViva(numeroTransporte, nomeCliente, descricao, pesoCarga, latOrigem, lonOrigem, latDestino, lonDestino, tempMin, tempMax);
-                        if (app.getTransportes().add(transporte)) {
+                        Transporte transporte = new TransporteCargaViva(numeroTransporte, nomeCliente, descricao, pesoCarga, latOrigem, lonOrigem, latDestino, lonDestino, tempMin, tempMax);
+                        if (app.cadastrarTransporte(transporte)) {
                             app.getFilaTransporte().add(transporte);
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle("Transporte cadastrado");
@@ -211,7 +210,7 @@ public class SimulacaoController {
                         double lonDestino = Double.parseDouble(token[8]);
                         int qtdPassageiros = Integer.parseInt(token[9]);
                         Transporte transporte = new TransportePessoal(numeroTransporte, nomeCliente, descricao, pesoCarga, latOrigem, lonOrigem, latDestino, lonDestino, qtdPassageiros);
-                        if (app.getTransportes().add(transporte)) {
+                        if (app.cadastrarTransporte(transporte)) {
                             app.getFilaTransporte().add(transporte);
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle("Transporte cadastrado");

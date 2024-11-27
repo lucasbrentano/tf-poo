@@ -10,7 +10,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.util.Set;
+
 import dados.Drone;
 import dados.Transporte;
 import dados.TransportePessoal;
@@ -47,7 +48,7 @@ public class SalvarController {
     }
 
     private void salvarDronesCsv(String nomeArquivo) {
-        List<Drone> drones = app.getFrota();
+        Set<Drone> drones = app.getFrota();
         try (PrintWriter writer = new PrintWriter(new File(nomeArquivo))) {
             StringBuilder sb = new StringBuilder();
             sb.append("tipo;codigo;custofixo;autonomia;qtdmaxpessoas_pesomaximo;protecao_climatizado\n");
@@ -82,7 +83,7 @@ public class SalvarController {
     }
 
     private void salvarTransportesCsv(String nomeArquivo) {
-        List<Transporte> transportes = app.getTransportes();
+        Set<Transporte> transportes = app.getTransportes();
         try (PrintWriter writer = new PrintWriter(new File(nomeArquivo))) {
             StringBuilder sb = new StringBuilder();
             sb.append("tipo;numero;nomecliente;descricao;peso;latorigem;longorigem;latdestino;longdestino;qtdpessoas_perigosa_tempmin;tempmax;estado;droneassociado\n");
